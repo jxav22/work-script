@@ -46,10 +46,15 @@ class LinkedList:
     def __init__(self):
         self._length = 0
         self._head = None
+        self._tail = None
 
     def insert(self, node):
         if self._length == 0:
             self._head = node
+            self._tail = node
+        else:
+            self._tail.set_next(node)
+            self._tail = node
 
         self._length += 1
 
@@ -139,11 +144,12 @@ class Distribution:
             else:
                 self.transfer(distribution, node.get_value().get_denomination(), 1)
 
+# Get stock information
+books = int(input("Books"))
+jackpot_sheets = int(input("Jackpot sheets: "))
+dabbers = int(input("Dabbers"))
 
-books = input("Books")
-jackpot_sheets = input("Jackpot sheets: ")
-dabbers = input("Dabbers")
-
+# Calculate earnings
 gross_earnings = (books * 7) + (jackpot_sheets * 3)
 
 skycity_takings = gross_earnings * 0.3
@@ -163,21 +169,25 @@ variety_takings += float_difference
 
 print("DIFFERENCE BETWEEN EXPECTED ({}) and actual ({}) : {}".format(expected_float, float_sum, float_difference))
 
+# Distribute skycity takings
 skycity = Distribution()
 float_distribution.distribute(skycity, skycity_takings)
-print("=====SKYCITY=====")
+print("======SKYCITY======")
 skycity.display()
-print(skycity.get_sum())
+print("Target: {}, Actual: {}".format(skycity_takings, skycity.get_sum()))
 
+# Distribute variety takings
 variety = Distribution()
 float_distribution.transfer(variety, 0.5)
 float_distribution.transfer(variety, 0.2)
 float_distribution.transfer(variety, 0.1)
 float_distribution.distribute(variety, variety_takings)
-print("=====VARIETY=====")
+print("======VARIETY======")
 variety.display()
-print(variety.get_sum())
+print("Target: {}, Actual: {}".format(variety_takings, variety.get_sum()))
 
+# Check float balances
 print("======FLOAT======")
 float_distribution.display()
 print(float_distribution.get_sum())
+print("Target: 500.0, Actual: {}".format(float_distribution.get_sum()))
