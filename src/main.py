@@ -1,6 +1,3 @@
-# TODO Simple command line based user interface
-# TODO Backend logic
-
 class Money:
     def __init__(self, denomination, amount=0):
         self._denomination = denomination
@@ -144,6 +141,7 @@ class Distribution:
             else:
                 self.transfer(distribution, node.get_value().get_denomination(), 1)
 
+
 # Get stock information
 books = int(input("Books"))
 jackpot_sheets = int(input("Jackpot sheets: "))
@@ -157,11 +155,19 @@ variety_takings = gross_earnings * 0.7 + (dabbers * 3)
 
 expected_float = skycity_takings + variety_takings + 500
 
+# Display earnings
+print("=====CALCULATIONS=====")
+print("Skycity takings: {}".format(skycity_takings))
+print("Variety takings: {}".format(variety_takings))
+print("Expected float: {}".format(expected_float))
+
+# Get float distribution
 float_distribution = Distribution()
 print("=====USER INPUT=====")
 float_distribution.get_user_input()
 float_distribution.display()
 
+# Calculate short
 float_sum = float_distribution.get_sum()
 float_difference = float_sum - expected_float
 
