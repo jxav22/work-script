@@ -17,7 +17,7 @@ class Money:
         self._amount += amount
 
     def remove(self, amount):
-        if amount <= self._amount:
+        if (amount <= self._amount) and (amount >= 0):
             self._amount -= amount
 
 
@@ -142,22 +142,24 @@ class Distribution:
                 self.transfer(distribution, node.get_value().get_denomination(), 1)
 
 
+print("=====RUNNING PROTOTYPE SOFTWARE=====")
+
 # Get stock information
-books = int(input("Books"))
+books = int(input("Books: "))
 jackpot_sheets = int(input("Jackpot sheets: "))
-dabbers = int(input("Dabbers"))
+dabbers = int(input("Dabbers: "))
 
 # Calculate earnings
 gross_earnings = (books * 7) + (jackpot_sheets * 3)
 
-skycity_takings = gross_earnings * 0.3
-variety_takings = gross_earnings * 0.7 + (dabbers * 3)
+skycity_takings = round(gross_earnings * 0.7, 2)
+variety_takings = round(gross_earnings * 0.3, 2) + (dabbers * 3)
 
 expected_float = skycity_takings + variety_takings + 500
 
 # Display earnings
 print("=====CALCULATIONS=====")
-print("Skycity takings: {}".format(skycity_takings))
+print("SkyCity takings: {}".format(skycity_takings))
 print("Variety takings: {}".format(variety_takings))
 print("Expected float: {}".format(expected_float))
 
@@ -165,7 +167,6 @@ print("Expected float: {}".format(expected_float))
 float_distribution = Distribution()
 print("=====USER INPUT=====")
 float_distribution.get_user_input()
-float_distribution.display()
 
 # Calculate short
 float_sum = float_distribution.get_sum()
@@ -173,7 +174,12 @@ float_difference = float_sum - expected_float
 
 variety_takings += float_difference
 
-print("DIFFERENCE BETWEEN EXPECTED ({}) and actual ({}) : {}".format(expected_float, float_sum, float_difference))
+# Display float
+print("======FLOAT======")
+float_distribution.display()
+print("DIFFERENCE BETWEEN EXPECTED ({}) AND ACTUAL ({}) : {}".format(expected_float, float_sum, float_difference))
+if float_difference != 0:
+    print("Adjusted Variety takings: {}".format(variety_takings))
 
 # Distribute skycity takings
 skycity = Distribution()
@@ -197,3 +203,6 @@ print("======FLOAT======")
 float_distribution.display()
 print(float_distribution.get_sum())
 print("Target: 500.0, Actual: {}".format(float_distribution.get_sum()))
+
+# Input so the window doesn't close
+input()
